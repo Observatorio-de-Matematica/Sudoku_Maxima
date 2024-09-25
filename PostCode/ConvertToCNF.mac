@@ -1,5 +1,6 @@
 
-/* Converts a Combined Matrix into a CNF format */
+
+/* Converts a Combined Matrix into a CNF format */
 
 ConvertToCNF(InMatrix,IsSolution):=block([N:length(InMatrix[1]),CNF,ListCNF,Mult,Clause],
     CNF:"",
@@ -27,4 +28,3 @@ ConvertToCNF(InMatrix,IsSolution):=block([N:length(InMatrix[1]),CNF,ListCNF,Mult
     ),
     Output
 );
-
