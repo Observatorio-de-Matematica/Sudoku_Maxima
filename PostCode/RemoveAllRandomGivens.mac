@@ -1,5 +1,10 @@
 
-/* Removes random values until no more can be removed whilst preserving a unique solution  */RemoveAllRandomGivens(CombMatrix):=block([N:length(CombMatrix[1]),ListOfRemCells,CNFSolM],    load(LoadRemoving),
+
+/* Removes random values until no more can be removed whilst preserving a unique solution  */
+
+
+
+RemoveAllRandomGivens(CombMatrix):=block([N:length(CombMatrix[1]),ListOfRemCells,CNFSolM],    load(LoadRemoving),
     LoadRemoving(),
     SeedRandom(),    ListOfRemCells:GenListRemCells(CombMatrix),    CNFSolM:ConvertToCNF(CombMatrix,true),
 
@@ -7,4 +12,3 @@
         RemoveOneRandomGiven(CombMatrix,CNFSolM,ListOfRemCells)
     )
 );
-
