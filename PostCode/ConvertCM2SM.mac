@@ -1,6 +1,8 @@
 
-/* Converts a Combined Matrix into a Sudoku Matrix */
-
+/* Converts a Combined Matrix into a Sudoku Matrix */
+
+
+
 ConvertCM2SM(CombMatrix):=block([N:length(CombMatrix[1]),n:sqrt(N),Positions],
     load(SudokuMatrixGen),
     load(GetPositions),
@@ -11,4 +13,3 @@ ConvertCM2SM(CombMatrix):=block([N:length(CombMatrix[1]),n:sqrt(N),Positions],
     ),
     SudokuMatrix
 );
-
