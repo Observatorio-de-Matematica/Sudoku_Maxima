@@ -11,12 +11,12 @@
 NotPossibles(Count,SudokuMatrix,CombMatrix,ListNotPossValues):=block([Band,Stack,Row,Column,Temp,Positions,N:length(CombMatrix[1]),n:length(SudokuMatrix[1])],
 
 
-    load(GetPositions),
+    load("GetPositions.mac"),
 
     Positions:GetPositions(Count,N),    Band:Positions[1],    Stack:Positions[2],    Row:Positions[3],    Column:Positions[4],    Temp: row(CombMatrix, (n*(Band-1)+Row)),
 
 
-    Temp: Temp[1],
+    Temp: args(Temp)[1],
 
 
     NotPossRow: rest(Temp,-(N-(n*(Stack-1))-Column+1)),
@@ -28,7 +28,7 @@ NotPossibles(Count,SudokuMatrix,CombMatrix,ListNotPossValues):=block([Band,Stack
     Temp: transpose(Temp),
 
 
-    Temp: Temp[1],
+    Temp: args(Temp)[1],
 
 
     NotPossCol: rest(Temp,-(N-(n*(Band-1))-Row+1)),
@@ -47,7 +47,7 @@ NotPossibles(Count,SudokuMatrix,CombMatrix,ListNotPossValues):=block([Band,Stack
     ),
 
 
-    TempRow: Temp[1],
+    TempRow: args(Temp)[1],
 
 
     NotPossBox: rest(TempRow, -(N-(n*(Row-1))-Column+1)),

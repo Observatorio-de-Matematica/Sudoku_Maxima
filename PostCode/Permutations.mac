@@ -1,0 +1,133 @@
+/* Combined Permutations file */
+
+/* Swaps two bands of a CombMatrix */
+
+SwapBands(CombMatrix,Band1No,Band2No):=block([N:length(CombMatrix[1]),n:sqrt(N),TempBand:zeromatrix(n,N)],
+    for i:1 thru n do (
+        for j:1 thru N do (
+            TempBand[i,j]:CombMatrix[n*(Band1No-1)+i,j]
+        )
+    ),
+
+    for i:1 thru n do (
+        for j:1 thru N do (
+            CombMatrix[n*(Band1No-1)+i,j]:CombMatrix[n*(Band2No-1)+i,j]
+        )
+    ),
+
+
+    for i:1 thru n do (
+        for j:1 thru N do (
+            CombMatrix[n*(Band2No-1)+i,j]:TempBand[i,j]
+        )
+    )
+);
+
+/* Swaps two stacks of a CombMatrix */
+
+SwapStacks(CombMatrix,Stack1No,Stack2No):=block([N:length(CombMatrix[1]),n:sqrt(N),TempStack:zeromatrix(N,n)],
+    for i:1 thru N do (
+        for j:1 thru n do (
+            TempStack[i,j]:CombMatrix[i,n*(Stack1No-1)+j]
+        )
+    ),
+
+    for i:1 thru N do (
+        for j:1 thru n do (
+            CombMatrix[i,n*(Stack1No-1)+j]:CombMatrix[i,n*(Stack2No-1)+j]
+        )
+    ),
+
+
+    for i:1 thru N do (
+        for j:1 thru n do (
+            CombMatrix[i,n*(Stack2No-1)+j]:TempStack[i,j]
+        )
+    )
+);
+
+/* Swaps the two specified rows within the specified band of a CombMatrix */
+
+SwapRows(CombMatrix,BandNo,Row1No,Row2No):=block([N:length(CombMatrix[1]),n:sqrt(N),TempRow:zeromatrix(1,N)],
+    for i:1 thru N do (
+        TempRow[1,i]:CombMatrix[n*(BandNo-1)+Row1No,i]
+    ),
+    for i:1 thru N do (
+        CombMatrix[n*(BandNo-1)+Row1No,i]:CombMatrix[n*(BandNo-1)+Row2No,i]
+    ),
+    for i:1 thru N do (
+        CombMatrix[n*(BandNo-1)+Row2No,i]:TempRow[1,i]
+    )
+);
+
+/* Swaps the two specified columns within the specified stack of a CombMatrix */
+
+SwapColumns(CombMatrix,StackNo,Column1No,Column2No):=block([N:length(CombMatrix[1]),n:sqrt(N),TempColumn:zeromatrix(N,1)],
+    for i:1 thru N do (
+        TempColumn[i,1]:CombMatrix[i,n*(StackNo-1)+Column1No]
+    ),
+    for i:1 thru N do (
+        CombMatrix[i,n*(StackNo-1)+Column1No]:CombMatrix[i,n*(StackNo-1)+Column2No]
+    ),
+    for i:1 thru N do (
+        CombMatrix[i,n*(StackNo-1)+Column2No]:TempColumn[i,1]
+    )
+);
+
+/* Reflects a Combined Matrix in one of the four possible axes */
+
+Reflect(CombMatrix,Axis):=block([N:length(CombMatrix[1]),NewMatrix,TempCol,TempRow,TempMatrix,TempMatrix2],
+    if Axis=1 then (
+        NewMatrix:col(CombMatrix,N),
+        for i:2 thru N do (
+            TempCol:col(CombMatrix,(N+1-i)),
+            NewMatrix:addcol(NewMatrix,TempCol)
+        )
+    ),
+
+    if Axis=2 then (
+        NewMatrix:row(CombMatrix,N),
+        for i:2 thru N do (
+            TempRow:row(CombMatrix,(N+1-i)),
+            NewMatrix:addrow(NewMatrix,TempRow)
+        )
+    ),
+
+    if Axis=3 then (
+        NewMatrix:transpose(CombMatrix)
+    ),
+
+    if Axis=4 then (
+        TempMatrix:col(CombMatrix,N),
+        for i:2 thru N do (
+            TempCol:col(CombMatrix,(N+1-i)),
+            TempMatrix:addcol(TempMatrix,TempCol)
+        ),
+    
+        TempMatrix2:row(TempMatrix,N),
+        for i:2 thru N do (
+            TempRow:row(TempMatrix,(N+1-i)),
+            TempMatrix2:addrow(TempMatrix2,TempRow)
+        ),
+        NewMatrix:transpose(TempMatrix2)
+    ),
+
+    CombMatrix:NewMatrix
+);
+
+/* Rotates a CombMatrix by either one, two or three quarters */
+
+Rotate(CombMatrix,NoOfRots):=block([N:length(CombMatrix[1]),OldMatrix,NewMatrix,TempCol],
+    OldMatrix:copymatrix(CombMatrix),
+    for i:1 thru NoOfRots do (
+        if i>1 then (
+            OldMatrix:copymatrix(NewMatrix)
+        ),
+        NewMatrix:transpose(row(OldMatrix,N)),
+        for j:1 thru (N-1) do (
+            TempCol:transpose(row(OldMatrix,N-j)),
+            NewMatrix:addcol(NewMatrix,TempCol)
+        )
+    ),
+    CombMatrix:NewMatrix
+);

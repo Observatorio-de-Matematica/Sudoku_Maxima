@@ -2,7 +2,7 @@
 /* Retrieves a value in a position in a matrix */
 
 GetValue(Matrix, Type, Count):=block([Positions,Band,Stack,Row,Column,CMRow,CMColumn],
-    load(GetPositions),
+    load("GetPositions.mac"),
     if Type=SudokuMatrix then (
         Positions:GetPositions(Count,(length(Matrix[1]))^2),
 

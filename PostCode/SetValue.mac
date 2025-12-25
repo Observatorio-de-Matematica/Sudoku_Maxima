@@ -4,7 +4,7 @@
 /* Assigns a value to a position in a matrix */
 
 SetValue(Matrix, Type, Count, Value):=block([Positions,Band,Stack,Row,Column,CMRow,CMColumn],
-    load(GetPositions),
+    load("GetPositions.mac"),
     if Type=SudokuMatrix then (
         Positions:GetPositions(Count,(length(Matrix[1]))^2),
         Band:Positions[1],

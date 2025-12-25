@@ -1,5 +1,5 @@
 
-/* Tests whether a Combined Matrix has a satisfiable solution other then the one provided */TestSatisfiable(CombMatrix,CNFSolM):=block([N:length(CombMatrix[1]),Found:false,Stream],    load(ConvertToCNF),    load(stringproc),    CNFCombM:ConvertToCNF(CombMatrix,false),
+/* Tests whether a Combined Matrix has a satisfiable solution other then the one provided */TestSatisfiable(CombMatrix,CNFSolM):=block([N:length(CombMatrix[1]),Found:false,Stream],    load("ConvertToCNF.mac"),    load(stringproc),    CNFCombM:ConvertToCNF(CombMatrix,false),
     Answer:"",
     if N=4 then (
         system("C:/Users/James/Documents/GitHub/Maxima/Solver/CopyBase4x4Temp")

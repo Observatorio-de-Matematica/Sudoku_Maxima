@@ -1,0 +1,38 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: input   start ] */
+file_search_maxima: append (file_search_maxima,["C:/Users/Usuario/Sudoku_Maxima", "C:/Users/Usuario/Sudoku_Maxima/PostCode"])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+load("GenSolution.mac")$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+file_search_maxima;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Generate a 9x9 Sudoku solution */
+GenSolution(9);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Display the combined matrix (flat Sudoku grid) */
+CombMatrix;
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Display the Sudoku matrix (block structure) */
+SudokuMatrix;
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$

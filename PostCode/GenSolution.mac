@@ -1,19 +1,13 @@
 
 /* Generate a solution of specified size */
 
-
+file_search_maxima: append (file_search_maxima,["C:/Users/Usuario/Sudoku_Maxima", "C:/Users/Usuario/Sudoku_Maxima/PostCode"])$
 
 GenSolution(Size):=block
 
 
 ([N:Size,SudokuMatrix,CombMatrix,AllPossValues,NotPossValues,BackTrack:0,Count:1,Positions,Possibles,NotPossibles,RandomValue],
-    load(SudokuMatrixGen),
-    load(CombMatrixGen),
-    load(GenAllPossValuesList),
-    load(GenNotPossValuesList),
-    load(NotPossibles),
-    load(SetValue),
-    load(GetValue),
+    load("CoreGen.mac"),
 
     SudokuMatrix:SudokuMatrixGen(N),
 

@@ -2,11 +2,10 @@
 /* Loads all files needed to remove givens */
 
 LoadRemoving():=(
-    load(SeedRandom),
-    load(GenListRemCells),
-    load(ConvertToCNF),
-    load(RemoveOneRandomGiven),
-    load(GetValue),
-    load(SetValue),
-    load(TestSatisfiable)
+    load("SeedRandom.mac"),
+    load("GenListRemCells.mac"),
+    load("ConvertToCNF.mac"),
+    load("RemoveOneRandomGiven.mac"),
+    load("CoreGen.mac"),
+    load("TestSatisfiable.mac")
 );

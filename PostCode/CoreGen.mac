@@ -1,0 +1,137 @@
+/* Core Generation and Matrix Operations */
+
+/* Takes a value which represents a square, and returns the band, stack, row within the band and the column within the stack */
+
+GetPositions(Value,Size):=block([Position:Value,N:Size,n:sqrt(Size),Band,Stack,Row,Column,CMRow,CMColumn],
+    Band:1+quotient(Value-1,n^3),
+    Stack:1+quotient(mod(Value-1,n^3),N),
+    Row:1+quotient(mod(Value-1,N),n),
+    Column:1+mod(Value-1,n),
+    CMRow:n*(Band-1)+Row,
+    CMColumn:n*(Stack-1)+Column,
+    ListOfPositions:[Band,Stack,Row,Column,CMRow,CMColumn]
+);
+
+/* Sudoku Matrix Generator */
+
+SudokuMatrixGen(N):= block([n:sqrt(N)],
+    SudokuMatrix : zeromatrix(n,n),
+    
+for i:1 thru n do (
+        
+for j:1 thru n do (
+            SudokuMatrix[i,j]:zeromatrix(n,n)
+        )
+    ),
+    SudokuMatrix
+);
+
+/* Combined Matrix Generator */
+
+CombMatrixGen(N):=zeromatrix(N,N);
+
+/* Generates a list of all values in the Sudoku solution for the specified size */
+
+GenAllPossValuesList(Size):=(
+    makelist(i+1,i,0,Size-1)
+);
+
+/* Generates a list used to store information of which values cannot be placed in which positions at that time */
+
+GenNotPossValuesList(Size):=(
+    NotPossValuesList:makelist(),
+    for i from 1 thru (Size^2) do(
+        TempList:[[]],
+        NotPossValuesList:append(NotPossValuesList,TempList)
+    ),
+    NotPossValuesList
+);
+
+/* For a given matrix and position, creates a list of value which can not be placed in that cell */
+
+NotPossibles(Count,SudokuMatrix,CombMatrix,ListNotPossValues):=block([Band,Stack,Row,Column,Temp,Positions,N:length(CombMatrix[1]),n:length(SudokuMatrix[1])],
+
+    Positions:GetPositions(Count,N),    Band:Positions[1],    Stack:Positions[2],    Row:Positions[3],    Column:Positions[4],    Temp: row(CombMatrix, (n*(Band-1)+Row)),
+
+    Temp: args(Temp)[1],
+
+    NotPossRow: rest(Temp,-(N-(n*(Stack-1))-Column+1)),
+
+    Temp: col(CombMatrix, (n*(Stack-1)+Column)),
+
+    Temp: transpose(Temp),
+
+    Temp: args(Temp)[1],
+
+    NotPossCol: rest(Temp,-(N-(n*(Band-1))-Row+1)),
+
+    Temp: row(SudokuMatrix[Band,Stack],1),
+
+    for i:2 thru n do(
+
+        TempRow: row(SudokuMatrix[Band,Stack],i),
+
+        Temp: addcol(Temp, TempRow)
+    ),
+
+    TempRow: args(Temp)[1],
+
+    NotPossBox: rest(TempRow, -(N-(n*(Row-1))-Column+1)),
+
+    NotPossibles: append(NotPossRow,NotPossCol, NotPossBox, ListNotPossValues),
+
+    NotPossibles: unique(NotPossibles)
+
+);
+
+/* Assigns a value to a position in a matrix */
+
+SetValue(Matrix, Type, Count, Value):=block([Positions,Band,Stack,Row,Column,CMRow,CMColumn],
+    if Type=SudokuMatrix then (
+        Positions:GetPositions(Count,(length(Matrix[1]))^2),
+        Band:Positions[1],
+
+        Stack:Positions[2],
+
+        Row:Positions[3],
+
+        Column:Positions[4],
+
+        Matrix[Band,Stack][Row,Column]:Value
+    ),
+    if Type=CombMatrix then (
+        Positions:GetPositions(Count,length(Matrix[1])),
+        CMRow:Positions[5],
+
+        CMColumn:Positions[6],
+
+        Matrix[CMRow,CMColumn]:Value
+    )
+);
+
+/* Retrieves a value in a position in a matrix */
+
+GetValue(Matrix, Type, Count):=block([Positions,Band,Stack,Row,Column,CMRow,CMColumn],
+    if Type=SudokuMatrix then (
+        Positions:GetPositions(Count,(length(Matrix[1]))^2),
+
+        Band:Positions[1],
+        Stack:Positions[2],
+        Row:Positions[3],
+        Column:Positions[4],
+        Value:Matrix[Band,Stack][Row,Column]
+
+    ),
+
+    if Type=CombMatrix then (
+        Positions:GetPositions(Count,length(Matrix[1])),
+
+        CMRow:Positions[5],
+        CMColumn:Positions[6],
+        Value:Matrix[CMRow,CMColumn]
+
+    ),
+
+    Value
+
+);
